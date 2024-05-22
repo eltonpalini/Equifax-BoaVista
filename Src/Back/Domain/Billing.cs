@@ -13,6 +13,8 @@ namespace Domain
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
 
+        public Billing() { }
+
         public Billing(Student student, Course course, PaymentTypeEnum paymentType)
         {
             Student = student;

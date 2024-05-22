@@ -9,11 +9,14 @@
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
 
+        public User() { }        
+
         public User(string login, string password)
         {
             Login = login;
             Password = password;
             CreatedAt = DateTime.UtcNow;
+            IsActive = true;
         }
 
         public void Inactivate()

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Persistence;
 using DependencyInjection;
+using Web.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Context>(options => options.UseInMemoryDatabase("BackofficeDataBase"));
+builder.Services.AddAutoMapper(typeof(AutoMapping));
 
 builder.Services.RegisterServices();
 builder.Services.RegisterRepositories();

@@ -1,20 +1,25 @@
 ﻿namespace Domain
 {
-    public class Student : User
+    public class Student
     {
-        public new int Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; private set; }
-        public new DateTime CreatedAt { get; private set; }
-        public new DateTime? UpdatedAt { get; set; }
-        public new bool IsActive { get; set; }
+        public User User { get; set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; set; }
+        public bool IsActive { get; set; }
 
-        public Student(string name, string login, string password) : base(login, password)
+        public Student() { }
+        
+
+        public Student(string name, string login, string password)
         {
             Name = name;
+            User = new User(login, password);
             CreatedAt = DateTime.UtcNow;
         }
 
-        public new void Inactivate()
+        public void Inactivate()
         {
             IsActive = false;
             UpdatedAt = DateTime.UtcNow;
