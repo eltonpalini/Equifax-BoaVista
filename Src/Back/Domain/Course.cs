@@ -15,6 +15,7 @@ namespace Domain
         public BillingTypeEnum BillingType { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; set; }
+        public bool IsActive { get; set; }
 
         public Course(string name, decimal price, BillingTypeEnum billingType) 
         { 
@@ -22,6 +23,12 @@ namespace Domain
             Price = price;
             BillingType = billingType;
             CreatedAt = DateTime.UtcNow;
+        }
+
+        public void Inativate()
+        {
+            IsActive = false;
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }
