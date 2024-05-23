@@ -25,7 +25,9 @@ namespace Persistence.Repository
 
         public async Task SaveAsync(Billing billing)
         {
-            await _context.Billings.AddAsync(billing);
+            if (!billing.UpdatedAt.HasValue)
+                await _context.Billings.AddAsync(billing);
+
             await _context.SaveChangesAsync();
         }
     }

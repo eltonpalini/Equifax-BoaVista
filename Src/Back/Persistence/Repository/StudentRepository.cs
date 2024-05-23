@@ -15,17 +15,19 @@ namespace Persistence.Repository
 
         public async Task<IList<Student>> GetAllAsync()
         {
-            return await _context.Students.ToListAsync();
+            return await _context.Students.Include(x => x.User).ToListAsync();
         }
 
         public async Task<Student?> GetByIdAsync(int id)
         {
-            return await _context.Students.FirstOrDefaultAsync(f => f.Id == id);
+            return await _context.Students.Include(x => x.User).FirstOrDefaultAsync(f => f.Id == id);
         }
 
         public async Task SaveAsync(Student student)
         {
-            await _context.Students.AddAsync(student);
+            if (!student.UpdatedAt.HasValue)
+                await _context.Students.AddAsync(student);
+            
             await _context.SaveChangesAsync();
         }
     }

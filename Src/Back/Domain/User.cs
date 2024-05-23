@@ -24,5 +24,12 @@
             IsActive = false;
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void Update(string login, string password)
+        {
+            Login = login;
+            Password = password;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

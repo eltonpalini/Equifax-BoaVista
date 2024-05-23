@@ -18,10 +18,17 @@ namespace Application.Services
             await _billingRepository.SaveAsync(billing);
         }
 
-        public async Task DeleteAsync(Billing billing)
+        public async Task<Billing?> DeleteAsync(int id)
         {
-            billing.Inactivate();
-            await _billingRepository.SaveAsync(billing);
+            var _billing = await _billingRepository.GetByIdAsync(id);
+
+            if (_billing is null)
+                return default;
+            
+            _billing.Inactivate();
+            await _billingRepository.SaveAsync(_billing);
+
+            return _billing;
         }
 
         public async Task<IList<Billing>> GetAllAsync()
@@ -34,10 +41,17 @@ namespace Application.Services
             return await (_billingRepository.GetByIdAsync(id));
         }
 
-        public async Task UpdateAsync(Billing billing)
+        public async Task<Billing?> UpdateAsync(int id, Billing billing)
         {
-            billing.UpdatedAt = DateTime.UtcNow;
+            var _billing = await _billingRepository.GetByIdAsync(id);
+
+            if (_billing is null)
+                return default;
+
+            _billing.Update(billing.StudentId, billing.CourseId, billing.PaymentTypeId, billing.Amount);
             await _billingRepository.SaveAsync(billing);
+            
+            return _billing;
         }
     }
 }

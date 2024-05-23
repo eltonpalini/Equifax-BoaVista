@@ -18,10 +18,17 @@ namespace Application.Services
             await _studentRepository.SaveAsync(student);
         }
 
-        public async Task DeleteAsync(Student student)
+        public async Task<Student?> DeleteAsync(int id)
         {
-            student.Inactivate();
-            await _studentRepository.SaveAsync(student);
+            var _student = await _studentRepository.GetByIdAsync(id);
+
+            if (_student is null)
+                return default;
+
+            _student.Inactivate();
+            await _studentRepository.SaveAsync(_student);
+
+            return _student;
         }
 
         public async Task<IList<Student>> GetAllAsync()
@@ -34,9 +41,17 @@ namespace Application.Services
             return await _studentRepository.GetByIdAsync(id);
         }
 
-        public async Task UpdateAsync(Student student)
+        public async Task<Student?> UpdateAsync(int id, Student student)
         {
+            var _student = await _studentRepository.GetByIdAsync(id);
+
+            if (_student is null)
+                return default;
+
+            _student.Update(student.Name, student.User.Login, student.User.Password);
             await _studentRepository.SaveAsync(student);
+
+            return _student;
         }
     }
 }

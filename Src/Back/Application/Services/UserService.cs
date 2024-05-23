@@ -18,10 +18,17 @@ namespace Application.Services
             await _userRepository.SaveAsync(user);
         }
 
-        public async Task DeleteAsync(User user)
+        public async Task<User?> DeleteAsync(int id)
         {
-            user.Inactivate();
-            await _userRepository.SaveAsync(user);
+            var _user = await _userRepository.GetByIdAsync(id);
+
+            if (_user == null)
+                return default;
+
+            _user.Inactivate();
+            await _userRepository.SaveAsync(_user);
+
+            return _user;
         }
 
         public async Task<IList<User>> GetAllAsync()
@@ -34,10 +41,17 @@ namespace Application.Services
             return await _userRepository.GetByIdAsync(id);
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task<User?> UpdateAsync(int id, User user)
         {
-            user.UpdatedAt = DateTime.UtcNow;
-            await _userRepository.SaveAsync(user);
+            var _user = await _userRepository.GetByIdAsync(id);
+
+            if (_user is null)
+                return default;
+
+            _user.Update(user.Login, user.Password);
+            await _userRepository.SaveAsync(_user);
+
+            return _user;
         }
     }
 }

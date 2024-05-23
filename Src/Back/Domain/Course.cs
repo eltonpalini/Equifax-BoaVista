@@ -20,11 +20,20 @@ namespace Domain
             Price = price;
             BillingType = (int)billingType;
             CreatedAt = DateTime.UtcNow;
+            IsActive = true;
         }
 
         public void Inativate()
         {
             IsActive = false;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Update(string name, decimal price, int  billingType)
+        {
+            Name = name; 
+            Price = price;
+            BillingType = billingType;
             UpdatedAt = DateTime.UtcNow;
         }
     }

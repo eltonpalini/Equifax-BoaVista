@@ -19,10 +19,17 @@ namespace Application.Services
             await _courseRepository.SaveAsync(course);
         }
 
-        public async Task DeleteAsync(Course course)
+        public async Task<Course?> DeleteAsync(int id)
         {
-            course.Inativate();
-            await _courseRepository.SaveAsync(course);
+            var _course = await _courseRepository.GetByIdAsync(id);
+
+            if (_course is null)
+                return default;
+
+            _course.Inativate();
+            await _courseRepository.SaveAsync(_course);
+
+            return _course;
         }
 
         public async Task<IList<Course>> GetAllAsync()
@@ -35,10 +42,17 @@ namespace Application.Services
             return await _courseRepository.GetByIdAsync(id);
         }
 
-        public async Task UpdateAsync(Course course)
+        public async Task<Course?> UpdateAsync(int id, Course course)
         {
-            course.UpdatedAt = DateTime.UtcNow;
-            await _courseRepository.SaveAsync(course);
+            var _course = await _courseRepository.GetByIdAsync(id);
+
+            if (_course is null)
+                return default;
+
+            _course.Update(course.Name, course.Price, course.BillingType);
+            await _courseRepository.SaveAsync(_course);
+
+            return _course;
         }
 
     }

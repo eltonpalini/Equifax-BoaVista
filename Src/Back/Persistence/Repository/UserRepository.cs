@@ -25,7 +25,9 @@ namespace Persistence.Repository
 
         public async Task SaveAsync(User user)
         {
-            await _context.Users.AddAsync(user);
+            if (!user.UpdatedAt.HasValue)
+                await _context.Users.AddAsync(user);
+
             await _context.SaveChangesAsync();
         }
     }

@@ -4,8 +4,6 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Web.Requests;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Web.Controllers
 {
     [Route("api/[controller]")]
@@ -21,7 +19,6 @@ namespace Web.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/<UserController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -29,7 +26,6 @@ namespace Web.Controllers
             return users.Any() ? Ok(users) : NotFound();
         }
 
-        // GET api/<UserController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -37,24 +33,30 @@ namespace Web.Controllers
             return user is null ? NotFound() : Ok(user);
         }
 
-        // POST api/<UserController>
         [HttpPost]
-        public async Task Post([FromBody] UserRequest user)
+        public async Task<IActionResult> Post([FromBody] UserRequest user)
         {
             var _user = _mapper.Map<User>(user);
             await _userService.AddAsync(_user);
+
+            return Ok(_user);
         }
 
-        // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] UserRequest user)
         {
+            var _user = _mapper.Map<User>(user);
+            _user = await _userService.UpdateAsync(id, _user);
+
+            return _user is null ? BadRequest() : Ok(_user);
         }
 
-        // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var _user = await _userService.DeleteAsync(id);
+
+            return _user is null ? BadRequest() : Ok(_user);
         }
     }
 }

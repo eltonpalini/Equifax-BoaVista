@@ -25,7 +25,9 @@ namespace Persistence.Repository
 
         public async Task SaveAsync(Course course)
         {
-            await _context.Courses.AddAsync(course);
+            if (!course.UpdatedAt.HasValue)
+                await _context.Courses.AddAsync(course);
+
             await _context.SaveChangesAsync();
         }
     }
