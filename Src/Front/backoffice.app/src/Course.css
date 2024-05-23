@@ -1,0 +1,61 @@
+/* src/Course.css */
+.Course {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1em;
+  background: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Course h2 {
+  margin-bottom: 1em;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.form-group input {
+  width: 50%;
+  padding: 0.5em;
+  box-sizing: border-box;
+}
+
+.form-group select {
+  width: 50%;
+  padding: 0.5em;
+  box-sizing: border-box;
+}
+
+button {
+  width: 50%;
+  padding: 0.7em;
+  background: #007bff;
+  border: none;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.success-message {
+  color: green;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 20px;
+  font-size: 18px;
+}
