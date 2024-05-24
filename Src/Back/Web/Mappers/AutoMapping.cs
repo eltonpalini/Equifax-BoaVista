@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
+using Domain;
+using Domain.Enums;
 using Web.Requests;
+using Web.Responses;
+using Application.Extensions;
 namespace Web.Mappers
 {
     public class AutoMapping : Profile
@@ -15,6 +19,11 @@ namespace Web.Mappers
                 .ForMember(x => x.Price, opt => opt.MapFrom(z => z.Price))
                 .ForMember(x => x.BillingType, opt => opt.MapFrom(z => z.BillingType));
 
+            CreateMap<Course, CourseResponse>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(z => z.Name))
+                .ForMember(x => x.Price, opt => opt.MapFrom(z => z.Price))
+                .ForMember(x => x.BillingType, opt => opt.MapFrom(z => EnumHelper.GetEnumMemberValue<BillingTypeEnum>((BillingTypeEnum)Enum.ToObject(typeof(BillingTypeEnum), z.BillingType))));
+            
             CreateMap<StudentRequest, Domain.Student>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(z => z.Name))
                 .ForPath(x => x.User.Login, opt => opt.MapFrom(z => z.Login))

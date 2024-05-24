@@ -1,0 +1,23 @@
+.ListCourses {
+  padding: 20px;
+}
+
+.ListCourses h2 {
+  margin-bottom: 20px;
+}
+
+.ListCourses ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ListCourses li {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.ListCourses li p {
+  margin: 5px 0;
+}

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Course from './Course';
+import ListCourses from './ListCourses';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
 			
 			</Route> 
 			<Route path="/course" element={<Course/>} />		
+			<Route path="/list-courses" element={<ListCourses/>} />
 		</Routes>	
     </div>
   );

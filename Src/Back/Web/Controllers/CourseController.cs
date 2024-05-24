@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Web.Requests;
+using Web.Responses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +27,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Get()
         {
             var _courses = await _courseService.GetAllAsync();
-            return _courses.Any() ? Ok(_courses) : NotFound();
+            return _courses.Any() ? Ok(_mapper.Map<IList<CourseResponse>>(_courses)) : NotFound();
         }
 
         // GET api/<CourseController>/5
@@ -34,7 +35,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var _course = await _courseService.GetByIdAsync(id);
-            return _course is null ? NotFound() : Ok(_course);
+            return _course is null ? NotFound() : Ok(_mapper.Map<CourseResponse>(_course));
         }
 
         // POST api/<CourseController>
@@ -44,7 +45,7 @@ namespace Web.Controllers
             var _course = _mapper.Map<Course>(course);
             await _courseService.AddAsync(_course);
 
-            return Ok(_course);
+            return Ok(_mapper.Map<CourseResponse>(_course));
         }
 
         // PUT api/<CourseController>/5
@@ -54,7 +55,7 @@ namespace Web.Controllers
             var _course = _mapper.Map<Course>(course);
             _course = await _courseService.UpdateAsync(id, _course);
 
-            return _course is null ? BadRequest() : Ok(_course);
+            return _course is null ? BadRequest() : Ok(_mapper.Map<CourseResponse>(_course));
         }
 
         // DELETE api/<CourseController>/5
@@ -62,7 +63,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var _course = await _courseService.DeleteAsync(id);
-            return _course is null ? BadRequest() : Ok(_course);
+            return _course is null ? BadRequest() : Ok(_mapper.Map<CourseResponse>(_course));
         }
     }
 }
