@@ -25,7 +25,7 @@ const Course = () => {
     e.preventDefault();
     
 	try {
-      const response = await axios.post('https://localhost:44375/api/Course', formData, {
+      const response = await axios.post('http://localhost:8080/api/Course', formData, {
         headers: {
           'Content-Type': 'application/json',
 		  'Access-Control-Allow-Origin': 'http://localhost:3000'

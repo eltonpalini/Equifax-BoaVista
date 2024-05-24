@@ -18,11 +18,11 @@ COPY ["Persistence/Persistence.csproj", "Persistence/"]
 RUN dotnet restore "./Web/Web.csproj"
 COPY . .
 WORKDIR "/src/Web"
-RUN dotnet build "./Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "/Web/Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

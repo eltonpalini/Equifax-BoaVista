@@ -10,7 +10,7 @@ const ListCourses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('https://localhost:44375/api/Course');
+        const response = await axios.get('http://localhost:8080/api/Course');
         setCourses(response.data);
       } catch (error) {
         setError('Erro ao carregar os cursos');
